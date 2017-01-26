@@ -1,0 +1,38 @@
+knife ec2 server create -x ec2-user -I ami-9be6f38c -S devopstest -i C:\chef\chef-repo\.chef\devopstest.pem -N t
+estapache -r 'recipe[apache]' -g sg-f43ed288 --subnet subnet-8793d6df --server-connect-attribute public_ip_address .\devopstest.pem -f t2.micro
+
+==============
+
+knife ssh 'name:testapache' 'sudo chef-client' --ssh-user ec2-user --identity-file C:\chef\chef-repo\.chef\devopstest.pem --attribute cloud.public_hostname
+
+================
+
+vagrant init ubuntu/trusty64
+
+https://atlas.hashicorp.com/boxes/search
+config.vm.boot_timeout = 300
+
+config.vm.provider :virtualbox do |vb|
+  vb.gui = true
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.box_url = "https://atlas.hashicorp.com/ubuntu/trusty64"
+
+  config.omnibus.chef_version = :latest
+  config.vm.provision :chef_client do |chef|
+    chef.provisioning_path = "/etc/chef"
+    chef.chef_server_url = "https://api.opscode.com/organizations/d1"
+    chef.validation_key_path = "C:/chef/chef-repo/.chef/d1-validator.pem"
+    chef.validation_client_name = "d1-validator"
+    chef.node_name = "servervagrant"
+  end
+  config.vm.provider :virtualbox do |vb|
+    vb.gui = false
+  end
+end
+=================
+
+vagrant plugin install vagrant-omnibus
+
