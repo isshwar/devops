@@ -1,3 +1,8 @@
+this is devops
+estapache -r 'recipe[apache]' -g sg-f43ed288 --subnet subnet-8793d6df --server-connect-attribute public_ip_address .\devopstest.pem -f t2.micro
+
+==============
+
 knife ssh 'name:testapache' 'sudo chef-client' --ssh-user ec2-user --identity-file C:\chef\chef-repo\.chef\devopstest.pem --attribute cloud.public_hostname
 
 ================
