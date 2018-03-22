@@ -9,6 +9,8 @@ knife ssh 'name:testapache' 'sudo chef-client' --ssh-user ec2-user --identity-fi
 
 vagrant init ubuntu/trusty64
 
+======================:
+
 https://atlas.hashicorp.com/boxes/search
 config.vm.boot_timeout = 300
 
